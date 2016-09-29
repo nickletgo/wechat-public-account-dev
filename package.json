@@ -1,0 +1,29 @@
+{
+  "name": "wechat-public-account-dev",
+  "version": "1.0.0",
+  "description": "An attempt to develop wechat public account",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js --exec babel-node --presets es2015,stage-2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickletgo/wechat-public-account-dev.git"
+  },
+  "keywords": [
+    "wechat"
+  ],
+  "author": "qbwang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nickletgo/wechat-public-account-dev/issues"
+  },
+  "homepage": "https://github.com/nickletgo/wechat-public-account-dev#readme",
+  "dependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-2": "^6.16.0",
+    "express": "^4.14.0",
+    "nodemon": "^1.10.2"
+  }
+}
