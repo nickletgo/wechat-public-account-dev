@@ -31,7 +31,7 @@ app.use(SetWeChatAccessToken(config))
 const port = process.env.PORT || 3000
 
 //Routes
-app.get('/verify', verify(config))
+app.get('/', verify(config))
 app.get('/serverlist', getServerList)
 
 app.listen(port, function() {
