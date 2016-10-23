@@ -46,8 +46,6 @@ class WechatServerListSingleton{
             })
 
             res.on('end', () => {
-
-                console.log(`Message body is: ${body}`)
                 let { ip_list: newServerList, errcode: errcode, errmsg: errmsg } = JSON.parse(body)
                 serverList = newServerList
                 if (errcode != null) {

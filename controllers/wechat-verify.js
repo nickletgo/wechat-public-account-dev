@@ -2,7 +2,6 @@ import sha1 from 'sha1'
 import config from '../config/config'
 
 const verify = (req, res) => {
-    console.log(req.accessToken)
     const {signature, nonce, timestamp, echostr } = req.query
     const queryArr = [config.token, timestamp, nonce]
     queryArr.sort()
