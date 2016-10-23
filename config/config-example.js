@@ -3,7 +3,8 @@ import deepFreeze from 'deep-freeze'
 let config = {
     secret : {
         appId : 'yourId',
-        appsecret: 'yourSecret'
+        appsecret: 'yourSecret',
+        token: 'yourToken'
     }
 }
 

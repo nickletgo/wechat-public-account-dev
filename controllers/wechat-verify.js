@@ -1,10 +1,10 @@
 import sha1 from 'sha1'
-
-const token = 'milandoodle'
+import config from '../config/config'
 
 const verify = (req, res) => {
+    console.log(req.accessToken)
     const {signature, nonce, timestamp, echostr } = req.query
-    const queryArr = [token, timestamp, nonce]
+    const queryArr = [config.token, timestamp, nonce]
     queryArr.sort()
     const calculatedSig = sha1(queryArr.join(''))
     if(calculatedSig == signature){

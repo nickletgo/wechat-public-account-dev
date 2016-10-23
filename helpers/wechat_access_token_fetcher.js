@@ -13,34 +13,37 @@ class WeChatAccessTokenSingleton {
         if (!instance) {
             instance = this
         }
+        return instance
     }
 
-    getAccessToken() {
-        if (expireDate == null || new Date().getTime() ) {
+    getAccessToken(callback) {
+        if (expireDate == null || new Date().getTime()) {
             const tokenUrl = `${url}token?grant_type=${grantTypeVal}&appid=${config.secret.appId}&secret=${config.secret.appsecret}`
-                //console.log(tokenUrl)
-            https.get(tokenUrl, this.setToken).on('error', (e) => {
+            https.get(tokenUrl, this.setToken(callback)).on('error', (e) => {
                 console.log(`Got error: ${e.message}`)
             })
+        } else{
+            callback(accessToken)
         }
-
-        return accessToken
     }
 
-    setToken(res) {
-        let body = ''
+    setToken(callback) {
+        return (res) => {
+            let body = ''
 
-        res.on('data', function(chunk) {
-            body += chunk
-        })
+            res.on('data', function(chunk) {
+                body += chunk
+            })
 
-        res.on('end', function() {
-            let {access_token: newAccessToken, expires_in: expiresIn} = JSON.parse(body)
-            accessToken = newAccessToken
-            let now = new Date()
-            now.setSeconds(expiresIn)
-            expireDate  = now
-        })
+            res.on('end', function() {
+                let { access_token: newAccessToken, expires_in: expiresIn } = JSON.parse(body)
+                accessToken = newAccessToken
+                let now = new Date()
+                now.setSeconds(expiresIn)
+                expireDate = now
+                callback(accessToken)
+            })
+        }
     }
 }
 
