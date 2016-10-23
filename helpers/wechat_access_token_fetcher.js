@@ -1,5 +1,4 @@
 import https from 'https'
-import config from '../config/config'
 
 const url = 'https://api.weixin.qq.com/cgi-bin/'
 const grantTypeVal = 'client_credential'
@@ -16,9 +15,9 @@ class WeChatAccessTokenSingleton {
         return instance
     }
 
-    getAccessToken(callback) {
+    getAccessToken(appId, appsecret, callback) {
         if (expireDate == null || new Date().getTime()) {
-            const tokenUrl = `${url}token?grant_type=${grantTypeVal}&appid=${config.secret.appId}&secret=${config.secret.appsecret}`
+            const tokenUrl = `${url}token?grant_type=${grantTypeVal}&appid=${appId}&secret=${appsecret}`
             https.get(tokenUrl, this.setToken(callback)).on('error', (e) => {
                 console.log(`Got error: ${e.message}`)
             })
