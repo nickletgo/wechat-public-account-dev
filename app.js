@@ -21,17 +21,26 @@ try {
         }
     }
 }
-console.log(config)
 
 const app = express()
 
-app.use(SetWeChatAccessToken(config))
+const exclude = (path, middleware) => {
+    return (req, res, next) => {
+        if(req.path == path) {
+            return next()
+        }else{
+            middleware(req, res, next)
+        }
+    }
+}
+
+app.use(exclude('/verify', new SetWeChatAccessToken(config)))
 
 //Configuration
 const port = process.env.PORT || 3000
 
 //Routes
-app.get('/', verify(config))
+app.get('/verify', verify(config))
 app.get('/serverlist', getServerList)
 
 app.listen(port, function() {
