@@ -17,12 +17,14 @@ class WeChatAccessTokenSingleton {
 
     getAccessToken(appId, appsecret, callback) {
         if (expireDate == null || new Date().getTime()) {
+            console.log('Fetching a new access token')
             const tokenUrl = `${url}token?grant_type=${grantTypeVal}&appid=${appId}&secret=${appsecret}`
             https.get(tokenUrl, this.setToken(callback)).on('error', (e) => {
-                console.log(`Got error: ${e.message}`)
+                callback(e)
             })
         } else{
-            callback(accessToken)
+            console.log('Use the existing access token')
+            callback(null, accessToken)
         }
     }
 
@@ -40,7 +42,7 @@ class WeChatAccessTokenSingleton {
                 let now = new Date()
                 now.setSeconds(expiresIn)
                 expireDate = now
-                callback(accessToken)
+                callback(null, accessToken)
             })
         }
     }

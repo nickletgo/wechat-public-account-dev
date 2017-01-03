@@ -2,6 +2,7 @@ import express from 'express'
 
 //Middlewares
 import SetWeChatAccessToken from './middlewares/wechat-access-token'
+import VerifyClient from './middlewares/server-list-verify'
 
 //Controllers
 import getServerList from './controllers/wechat-server-list'
@@ -35,6 +36,7 @@ const exclude = (path, middleware) => {
 }
 
 app.use(exclude('/verify', new SetWeChatAccessToken(config)))
+app.use(exclude('/verify', new VerifyClient()))
 
 //Configuration
 const port = process.env.PORT || 3000

@@ -26,6 +26,7 @@
     "deep-freeze": "0.0.1",
     "express": "^4.14.0",
     "nodemon": "^1.10.2",
+    "request-ip": "^1.2.3",
     "sha1": "^1.1.1"
   }
 }

@@ -10,18 +10,21 @@ let updateList = true
 class WechatServerListSingleton{
 
     constructor(newAccessToken) {
-        if (instance == null) {
+        updateList = false
+        if (!instance) {
             instance = this
+            updateList = true
         }
 
         if (accessToken == null || newAccessToken != accessToken) {
             accessToken = newAccessToken
             updateList = true
         }
+
         return instance
     }
 
-    getServerList(callback) {
+    verifyClientIp(callback) {
         if (updateList) {
             this.fetchServerList(callback)
         } else {

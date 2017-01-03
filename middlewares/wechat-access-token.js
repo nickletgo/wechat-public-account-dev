@@ -5,9 +5,13 @@ let accessTokenSingleton = new WeChatAccessTokenSingleton()
 const SetWeChatAccessToken = (config) => {
 
     return (req, res, next) => {
-        accessTokenSingleton.getAccessToken(config.secret.appId, config.secret.appsecret, (accessToken) => {
+        accessTokenSingleton.getAccessToken(config.secret.appId, config.secret.appsecret, (error, accessToken) => {
             req.accessToken = accessToken
-            next()
+            if(accessToken != null) {
+                next()
+            } else{
+                next(new Error(`Not able to get access token: ${error.message}`))
+            }
         })
     }
 }
