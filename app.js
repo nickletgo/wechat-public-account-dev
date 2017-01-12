@@ -7,6 +7,7 @@ import VerifyClient from './middlewares/server-list-verify'
 //Controllers
 import getServerList from './controllers/wechat-server-list'
 import verify from './controllers/wechat-verify'
+import index from './controllers/index'
 
 //Set up config
 let config = null
@@ -44,6 +45,7 @@ const port = process.env.PORT || 3000
 //Routes
 app.get('/verify', verify(config))
 app.get('/serverlist', getServerList)
+app.get('/', index)
 
 app.listen(port, function() {
     console.log(`Example app listening on port ${port}!`)

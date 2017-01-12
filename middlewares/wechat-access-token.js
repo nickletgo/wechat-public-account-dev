@@ -10,7 +10,7 @@ const SetWeChatAccessToken = (config) => {
             if(accessToken != null) {
                 next()
             } else{
-                next(new Error(`Not able to get access token: ${error.message}`))
+                next(new Error(`Not able to get access token: ${error}`))
             }
         })
     }

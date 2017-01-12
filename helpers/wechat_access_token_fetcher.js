@@ -16,10 +16,11 @@ class WeChatAccessTokenSingleton {
     }
 
     getAccessToken(appId, appsecret, callback) {
-        if (expireDate == null || new Date().getTime()) {
+        if (expireDate == null || new Date() >= expireDate) {
             console.log('Fetching a new access token')
             const tokenUrl = `${url}token?grant_type=${grantTypeVal}&appid=${appId}&secret=${appsecret}`
             https.get(tokenUrl, this.setToken(callback)).on('error', (e) => {
+                console.log('error fetching token')
                 callback(e)
             })
         } else{
@@ -37,12 +38,16 @@ class WeChatAccessTokenSingleton {
             })
 
             res.on('end', function() {
-                let { access_token: newAccessToken, expires_in: expiresIn } = JSON.parse(body)
-                accessToken = newAccessToken
-                let now = new Date()
-                now.setSeconds(expiresIn)
-                expireDate = now
-                callback(null, accessToken)
+                let { errcode: errcode, errmsg: errmsg, access_token: newAccessToken, expires_in: expiresIn } = JSON.parse(body)
+                if(errcode){
+                    callback(new Error(`Failed fetching access token from Wechat server. Error(code:${errcode}): ${errmsg}`))
+                }else{
+                    accessToken = newAccessToken
+                    let now = new Date()
+                    now.setSeconds(expiresIn)
+                    expireDate = now
+                    callback(null, accessToken)
+                }
             })
         }
     }
