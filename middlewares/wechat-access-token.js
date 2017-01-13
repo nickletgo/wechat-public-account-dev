@@ -1,4 +1,4 @@
-import WeChatAccessTokenSingleton from '../helpers/wechat_access_token_fetcher'
+import WeChatAccessTokenSingleton from '../helpers/wechat-access-token-fetcher'
 
 let accessTokenSingleton = new WeChatAccessTokenSingleton()
 
