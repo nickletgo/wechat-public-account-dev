@@ -10,7 +10,7 @@ import verify from './controllers/wechat-verify';
 import index from './controllers/index';
 
 // Config
-import getConfig from './config/config';
+import config from './config/config';
 
 const app = express();
 
@@ -24,14 +24,12 @@ const exclude = (path, middleware) =>
     }
   );
 
-getConfig((error, config) => {
-  app.use(exclude('/verify', new SetWeChatAccessToken(config)));
-  app.use(exclude('/verify', new VerifyClient()));
+app.use(exclude('/verify', new SetWeChatAccessToken(config)));
+app.use(exclude('/verify', new VerifyClient()));
 
-  // Routes
-  app.get('/verify', verify(config));
-  app.get('/serverlist', getServerList);
-  app.get('/', index);
+// Routes
+app.get('/verify', verify(config));
+app.get('/serverlist', getServerList);
+app.get('/', index);
 
-  app.listen(config.port, () => console.log(`Example app listening on port ${config.port}!`));
-});
+app.listen(config.port, () => console.log(`Example app listening on port ${config.port}!`));
